@@ -1,0 +1,51 @@
+﻿@model IEnumerable<IYCDashboard.Models.DB.SubCategory>
+
+@{
+    ViewBag.Title = "Add / Edit SubCategories";
+    Layout = "~/Views/Shared/_sharedLayout.cshtml";
+}
+
+<br />
+<h4>SubCategories</h4>
+<hr />
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-link" })
+</p>
+<div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}" data-widget-static="">
+
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+                <tr class="warning">
+                    <th>
+                        @Html.DisplayNameFor(model => model.SubCategoryName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category.CategoryID)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SubCategoryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.SubCategoryID }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.SubCategoryID }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.SubCategoryID }, new { @class = "btn btn-link" })
+                        </td>
+                    </tr>
+                </tbody>
+            }
+
+        </table>
+    </div>
+</div>

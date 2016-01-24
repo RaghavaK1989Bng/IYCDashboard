@@ -1,0 +1,34 @@
+﻿@model IYCDashboard.Models.DB.SubCategory
+
+@{
+    ViewBag.Title = "SubCategory Details";
+    Layout = "~/Views/Shared/_sharedLayout.cshtml";
+}
+
+<div>
+    <br />
+    <h4>SubCategory Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.SubCategoryName, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubCategoryName)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Category.CategoryName, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SubCategoryID }, new { @class = "btn btn-link" }) |
+    @Html.ActionLink("Back to List", "Index",null, new { @class = "btn btn-link" })
+</p>

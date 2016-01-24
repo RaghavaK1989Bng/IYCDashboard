@@ -1,0 +1,26 @@
+﻿@model IYCDashboard.Models.DB.Category
+
+@{
+    ViewBag.Title = "Category Details";
+    Layout = "~/Views/Shared/_sharedLayout.cshtml";
+}
+
+<div>
+    <br />
+    <h4>Category Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.CategoryName, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CategoryID }, new { @class = "btn btn-link" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-link" })
+</p>
