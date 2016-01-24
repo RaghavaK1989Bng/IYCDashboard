@@ -11,7 +11,8 @@ namespace IYCDashboard.Models.DB
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class State
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +23,9 @@ namespace IYCDashboard.Models.DB
         }
     
         public int StateID { get; set; }
+
+        [Required(ErrorMessage = "State Name is required")]
+        [Display(Name = "State")]
         public string StateName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<IYCDashboard.Models.DB.State>
+
+@{
+    ViewBag.Title = "Add / Edit State";
+    Layout = "~/Views/Shared/_sharedLayout.cshtml";
+}
+
+<br />
+<h4>States</h4>
+<hr />
+
+<p>
+    @Html.ActionLink("Add New State", "Create", null, new { @class = "btn btn-link" })
+</p>
+<div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}" data-widget-static="">
+
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+                <tr class="warning">
+                    <th>
+                        @Html.DisplayNameFor(model => model.StateName)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StateName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.StateID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.StateID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.StateID })
+                        </td>
+                    </tr>
+                    </tbody>
+                    }
+
+            </table>
+        </div>
+    </div>
