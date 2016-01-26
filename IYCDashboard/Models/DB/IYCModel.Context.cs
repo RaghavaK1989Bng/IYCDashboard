@@ -40,5 +40,6 @@ namespace IYCDashboard.Models.DB
         public virtual DbSet<UserPreference> UserPreferences { get; set; }
         public virtual DbSet<UserRegistration> UserRegistrations { get; set; }
         public virtual DbSet<AdminLogin> AdminLogins { get; set; }
+        public virtual DbSet<Area> Areas { get; set; }
     }
 }

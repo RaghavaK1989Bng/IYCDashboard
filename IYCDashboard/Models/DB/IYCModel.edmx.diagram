@@ -38,6 +38,9 @@
         <AssociationConnector Association="IYCModel.FK_UserBloodGroupFaviourates_UserRegistration" ManuallyRouted="false" />
         <AssociationConnector Association="IYCModel.FK_UserFaviourateItems_UserRegistration" ManuallyRouted="false" />
         <AssociationConnector Association="IYCModel.FK_UserPreferences_UserRegistration" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="IYCModel.Area" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="IYCModel.FK_Areas_Cities" />
+        <AssociationConnector Association="IYCModel.FK_Areas_States" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

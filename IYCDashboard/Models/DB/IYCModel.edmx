@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="IYCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="IYCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AdminLogin">
@@ -14,6 +14,15 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           </Key>
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Areas">
+          <Key>
+            <PropertyRef Name="AreaId" />
+          </Key>
+          <Property Name="AreaId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AreaName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="StateId" Type="int" Nullable="false" />
+          <Property Name="CityId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="BloodRequests">
           <Key>
@@ -162,7 +171,32 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="DeviceID" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="CityID" Type="int" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_Areas_Cities">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="Areas" Type="Self.Areas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="Areas">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Areas_States">
+          <End Role="States" Type="Self.States" Multiplicity="1" />
+          <End Role="Areas" Type="Self.Areas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="Areas">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BloodRequests_Cities">
           <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
           <End Role="BloodRequests" Type="Self.BloodRequests" Multiplicity="*" />
@@ -380,6 +414,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="IYCModelStoreContainer">
+          <EntitySet Name="Areas" EntityType="Self.Areas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BloodRequests" EntityType="Self.BloodRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
@@ -400,6 +435,14 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
     [AdminLogin].[Password] AS [Password]
     FROM [dbo].[AdminLogin] AS [AdminLogin]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Areas_Cities" Association="Self.FK_Areas_Cities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Areas" EntitySet="Areas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Areas_States" Association="Self.FK_Areas_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="Areas" EntitySet="Areas" />
+          </AssociationSet>
           <AssociationSet Name="FK_BloodRequests_Cities" Association="Self.FK_BloodRequests_Cities">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="BloodRequests" EntitySet="BloodRequests" />
@@ -473,8 +516,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
             <End Role="UserRegistration" EntitySet="UserRegistration" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IYCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -517,6 +559,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <NavigationProperty Name="Directories" Relationship="Self.FK_Directory_Cities" FromRole="Cities" ToRole="Directory" />
           <NavigationProperty Name="Items" Relationship="Self.FK_Items_Cities" FromRole="Cities" ToRole="Items" />
           <NavigationProperty Name="UserRegistrations" Relationship="Self.FK_UserRegistration_Cities" FromRole="Cities" ToRole="UserRegistration" />
+          <NavigationProperty Name="Areas" Relationship="IYCModel.FK_Areas_Cities" FromRole="City" ToRole="Area" />
         </EntityType>
         <EntityType Name="Directory">
           <Key>
@@ -591,6 +634,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cities" Relationship="Self.FK_Cities_States" FromRole="States" ToRole="Cities" />
           <NavigationProperty Name="Directories" Relationship="Self.FK_Directory_States" FromRole="States" ToRole="Directory" />
+          <NavigationProperty Name="Areas" Relationship="IYCModel.FK_Areas_States" FromRole="State" ToRole="Area" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -661,6 +705,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <NavigationProperty Name="UserFaviourateBloodRequests" Relationship="Self.FK_UserBloodGroupFaviourates_UserRegistration" FromRole="UserRegistration" ToRole="UserFaviourateBloodRequests" />
           <NavigationProperty Name="UserFaviourateItems" Relationship="Self.FK_UserFaviourateItems_UserRegistration" FromRole="UserRegistration" ToRole="UserFaviourateItems" />
           <NavigationProperty Name="UserPreferences" Relationship="Self.FK_UserPreferences_UserRegistration" FromRole="UserRegistration" ToRole="UserPreferences" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AdminLogin">
           <Key>
@@ -974,7 +1019,51 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
             <End Role="UserRegistration" EntitySet="UserRegistrations" />
             <End Role="UserPreferences" EntitySet="UserPreferences" />
           </AssociationSet>
+          <EntitySet Name="Areas" EntityType="IYCModel.Area" />
+          <AssociationSet Name="FK_Areas_Cities" Association="IYCModel.FK_Areas_Cities">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Area" EntitySet="Areas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Areas_States" Association="IYCModel.FK_Areas_States">
+            <End Role="State" EntitySet="States" />
+            <End Role="Area" EntitySet="Areas" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="AreaId" />
+          </Key>
+          <Property Name="AreaId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AreaName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="CityId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="IYCModel.FK_Areas_Cities" FromRole="Area" ToRole="City" />
+          <NavigationProperty Name="State" Relationship="IYCModel.FK_Areas_States" FromRole="Area" ToRole="State" />
+        </EntityType>
+        <Association Name="FK_Areas_Cities">
+          <End Type="IYCModel.City" Role="City" Multiplicity="1" />
+          <End Type="IYCModel.Area" Role="Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Areas_States">
+          <End Type="IYCModel.State" Role="State" Multiplicity="1" />
+          <End Type="IYCModel.Area" Role="Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1132,6 +1221,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <EntitySetMapping Name="UserRegistrations">
             <EntityTypeMapping TypeName="IYCModel.UserRegistration">
               <MappingFragment StoreEntitySet="UserRegistration">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="LoginType" ColumnName="LoginType" />
                 <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
@@ -1148,6 +1238,16 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
               <MappingFragment StoreEntitySet="AdminLogin">
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Areas">
+            <EntityTypeMapping TypeName="IYCModel.Area">
+              <MappingFragment StoreEntitySet="Areas">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

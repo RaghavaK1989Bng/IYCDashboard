@@ -22,6 +22,7 @@ namespace IYCDashboard.Models.DB
             this.Directories = new HashSet<Directory>();
             this.Items = new HashSet<Item>();
             this.UserRegistrations = new HashSet<UserRegistration>();
+            this.Areas = new HashSet<Area>();
         }
     
         public int CityID { get; set; }
@@ -43,5 +44,7 @@ namespace IYCDashboard.Models.DB
         public virtual ICollection<Item> Items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRegistration> UserRegistrations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Area> Areas { get; set; }
     }
 }
