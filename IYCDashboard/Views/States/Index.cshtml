@@ -1,4 +1,7 @@
-﻿@model IEnumerable<IYCDashboard.Models.DB.State>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<IYCDashboard.Models.DB.State>
 
 @{
     ViewBag.Title = "Add / Edit State";
@@ -19,27 +22,40 @@
             <thead>
                 <tr class="warning">
                     <th>
-                        @Html.DisplayNameFor(model => model.StateName)
+                        @Html.DisplayNameFor(model => model.First().StateName)
                     </th>
                     <th></th>
                 </tr>
             </thead>
-            @foreach (var item in Model)
+            @if (Model.Count() == 0)
             {
                 <tbody>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StateName)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.StateID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.StateID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.StateID })
+                        <td colspan="2">
+                            @Html.Label("Records not found", htmlAttributes: new { @class = "col-sm-2 control-label" })
                         </td>
                     </tr>
+                </tbody>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StateName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.StateID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.StateID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.StateID })
+                            </td>
+                        </tr>
                     </tbody>
-                    }
-
-            </table>
-        </div>
+                }
+            }
+        </table>
+        @Html.PagedListPager(Model, pageNumber => Url.Action("Index", new { pageNumber }))
     </div>
+</div>

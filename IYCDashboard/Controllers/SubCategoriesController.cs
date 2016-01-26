@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using IYCDashboard.Models.DB;
+using PagedList;
 
 namespace IYCDashboard.Controllers
 {
@@ -15,10 +12,10 @@ namespace IYCDashboard.Controllers
         private IYCEntities db = new IYCEntities();
 
         // GET: SubCategories
-        public ActionResult Index()
+        public ActionResult Index(int? pageNumber)
         {
             var subCategories = db.SubCategories.Include(s => s.Category);
-            return View(subCategories.ToList());
+            return View(subCategories.ToList().ToPagedList(pageNumber ?? 1, Constants.pageSize));
         }
 
         // GET: SubCategories/Details/5

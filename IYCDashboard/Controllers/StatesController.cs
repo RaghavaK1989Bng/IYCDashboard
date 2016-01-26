@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IYCDashboard.Models.DB;
+using PagedList;
 
 namespace IYCDashboard.Controllers
 {
@@ -15,9 +16,9 @@ namespace IYCDashboard.Controllers
         private IYCEntities db = new IYCEntities();
 
         // GET: States
-        public ActionResult Index()
+        public ActionResult Index(int? pageNumber)
         {
-            return View(db.States.ToList());
+            return View(db.States.ToList().ToPagedList(pageNumber ?? 1, Constants.pageSize));
         }
 
         // GET: States/Details/5

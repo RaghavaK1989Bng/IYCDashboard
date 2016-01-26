@@ -27,7 +27,7 @@
             @Html.LabelFor(model => model.SubCategoryName, htmlAttributes: new { @class = "col-sm-2 control-label" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.SubCategoryName, new { @class = "form-control1", style = "width:250px" })
-                @Html.ValidationMessageFor(model => model.SubCategoryName, "*", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.SubCategoryName, "", new { @class = "text-danger" })
             </div>
         </div>
 
