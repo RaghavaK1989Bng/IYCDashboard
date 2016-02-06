@@ -175,6 +175,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\Constants.cs" />
+    <Compile Include="Controllers\DirectoryCategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Controllers\SubCategoriesController.cs" />
@@ -288,6 +289,11 @@
     <Content Include="Views\Areas\Details.cshtml" />
     <Content Include="Views\Areas\Edit.cshtml" />
     <Content Include="Views\Areas\Index.cshtml" />
+    <Content Include="Views\DirectoryCategories\Create.cshtml" />
+    <Content Include="Views\DirectoryCategories\Delete.cshtml" />
+    <Content Include="Views\DirectoryCategories\Details.cshtml" />
+    <Content Include="Views\DirectoryCategories\Edit.cshtml" />
+    <Content Include="Views\DirectoryCategories\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -11,7 +11,8 @@ namespace IYCDashboard.Models.DB
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class DirectoryCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,8 +20,12 @@ namespace IYCDashboard.Models.DB
         {
             this.Directories = new HashSet<Directory>();
         }
-    
+
+        [Display(Name = "Category")]
         public int CategoryID { get; set; }
+
+        [Display(Name = "Category Name")]
+        [Required(ErrorMessage = "Category Name is required")]
         public string CategoryName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

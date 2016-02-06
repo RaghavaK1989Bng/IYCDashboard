@@ -1,0 +1,33 @@
+﻿@model IYCDashboard.Models.DB.DirectoryCategory
+
+@{
+    ViewBag.Title = "Delete Directory Category";
+    Layout = "~/Views/Shared/_sharedLayout.cshtml";
+}
+
+<br />
+<h4>Delete Directory Category</h4>
+<hr />
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.CategoryName, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-primary" /> |
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-link" })
+        </div>
+    }
+</div>
