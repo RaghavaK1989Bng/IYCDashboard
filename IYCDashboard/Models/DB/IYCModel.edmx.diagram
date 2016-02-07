@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="IYCModel.BloodRequest" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="IYCModel.Category" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="IYCModel.City" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="IYCModel.Directory" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IYCModel.DirectoryCategory" Width="1.5" PointX="6" PointY="17.875" IsExpanded="true" />
         <EntityTypeShape EntityType="IYCModel.ItemPicture" Width="1.5" PointX="7.5" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="IYCModel.Item" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
@@ -18,7 +17,7 @@
         <EntityTypeShape EntityType="IYCModel.UserFaviourateBloodRequest" Width="1.5" PointX="10.5" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="IYCModel.UserFaviourateItem" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="IYCModel.UserPreference" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="IYCModel.UserRegistration" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IYCModel.UserRegistration" Width="1.5" PointX="4.125" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="IYCModel.AdminLogin" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
         <AssociationConnector Association="IYCModel.FK_BloodRequests_Cities" ManuallyRouted="false" />
         <AssociationConnector Association="IYCModel.FK_UserBloodGroupFaviourates_BloodRequests" ManuallyRouted="false" />
@@ -26,11 +25,8 @@
         <AssociationConnector Association="IYCModel.FK_SubCategories_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="IYCModel.FK_UserPreferences_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="IYCModel.FK_Cities_States" ManuallyRouted="false" />
-        <AssociationConnector Association="IYCModel.FK_Directory_Cities" ManuallyRouted="false" />
         <AssociationConnector Association="IYCModel.FK_Items_Cities" ManuallyRouted="false" />
         <AssociationConnector Association="IYCModel.FK_UserRegistration_Cities" ManuallyRouted="false" />
-        <AssociationConnector Association="IYCModel.FK_Directory_DirectoryCategories" ManuallyRouted="false" />
-        <AssociationConnector Association="IYCModel.FK_Directory_States" ManuallyRouted="false" />
         <AssociationConnector Association="IYCModel.FK_ItemPictures_Items" ManuallyRouted="false" />
         <AssociationConnector Association="IYCModel.FK_Items_SubCategories" ManuallyRouted="false" />
         <AssociationConnector Association="IYCModel.FK_UserFaviourateItems_Items" ManuallyRouted="false" />
@@ -41,6 +37,13 @@
         <EntityTypeShape EntityType="IYCModel.Area" Width="1.5" PointX="5.25" PointY="0.75" />
         <AssociationConnector Association="IYCModel.FK_Areas_Cities" />
         <AssociationConnector Association="IYCModel.FK_Areas_States" />
+        <EntityTypeShape EntityType="IYCModel.UserDevice" Width="1.5" PointX="7.5" PointY="20.875" />
+        <AssociationConnector Association="IYCModel.FK_UserDevices_UserRegistration" />
+        <EntityTypeShape EntityType="IYCModel.Directory" Width="1.5" PointX="10.25" PointY="12.25" />
+        <AssociationConnector Association="IYCModel.FK_Directory_Areas" />
+        <AssociationConnector Association="IYCModel.FK_Directory_Cities" />
+        <AssociationConnector Association="IYCModel.FK_Directory_DirectoryCategories" />
+        <AssociationConnector Association="IYCModel.FK_Directory_States" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

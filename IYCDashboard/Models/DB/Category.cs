@@ -29,7 +29,7 @@ namespace IYCDashboard.Models.DB
         [Required(ErrorMessage = "Category Name is required")]
         [Display(Name = "Category Name")]
         public string CategoryName { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

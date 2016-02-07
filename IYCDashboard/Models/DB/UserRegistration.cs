@@ -20,6 +20,7 @@ namespace IYCDashboard.Models.DB
             this.UserFaviourateBloodRequests = new HashSet<UserFaviourateBloodRequest>();
             this.UserFaviourateItems = new HashSet<UserFaviourateItem>();
             this.UserPreferences = new HashSet<UserPreference>();
+            this.UserDevices = new HashSet<UserDevice>();
         }
     
         public int UserID { get; set; }
@@ -27,7 +28,6 @@ namespace IYCDashboard.Models.DB
         public byte[] ProfilePicture { get; set; }
         public string EmailID { get; set; }
         public string MobileNo { get; set; }
-        public string DeviceID { get; set; }
         public int CityID { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
@@ -39,5 +39,7 @@ namespace IYCDashboard.Models.DB
         public virtual ICollection<UserFaviourateItem> UserFaviourateItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserPreference> UserPreferences { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserDevice> UserDevices { get; set; }
     }
 }

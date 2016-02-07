@@ -175,6 +175,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\Constants.cs" />
+    <Compile Include="Controllers\DirectoriesController.cs" />
     <Compile Include="Controllers\DirectoryCategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
@@ -231,6 +232,9 @@
       <DependentUpon>IYCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DB\sysdiagram.cs">
+      <DependentUpon>IYCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB\UserDevice.cs">
       <DependentUpon>IYCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DB\UserFaviourateBloodRequest.cs">
@@ -294,6 +298,11 @@
     <Content Include="Views\DirectoryCategories\Details.cshtml" />
     <Content Include="Views\DirectoryCategories\Edit.cshtml" />
     <Content Include="Views\DirectoryCategories\Index.cshtml" />
+    <Content Include="Views\Directories\Create.cshtml" />
+    <Content Include="Views\Directories\Delete.cshtml" />
+    <Content Include="Views\Directories\Details.cshtml" />
+    <Content Include="Views\Directories\Edit.cshtml" />
+    <Content Include="Views\Directories\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

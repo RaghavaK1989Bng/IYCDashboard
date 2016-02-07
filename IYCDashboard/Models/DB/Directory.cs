@@ -11,20 +11,49 @@ namespace IYCDashboard.Models.DB
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Directory
     {
         public int DirectoryEntryID { get; set; }
+
+        [Required(ErrorMessage = "Category is required")]
+        [Display(Name = "Category")]
         public int DirectoryCategoryID { get; set; }
+
+        [Required(ErrorMessage = "Name is required")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "Service Provided is required")]
+        [Display(Name = "Service Provided")]
         public string ServiceProvided { get; set; }
+
+        [Required(ErrorMessage = "State is required")]
+        [Display(Name = "State")]
         public int StateID { get; set; }
+
+        [Required(ErrorMessage = "City is required")]
+        [Display(Name = "City")]
         public int CityID { get; set; }
-        public string AreaLocated { get; set; }
+
+        [Required(ErrorMessage = "Area is required")]
+        [Display(Name = "Area")]
+        public long AreaLocated { get; set; }
+
+        [Required(ErrorMessage = "PinCode is required")]
+        [Display(Name = "PinCode")]
         public string PinCode { get; set; }
+
+        [Required(ErrorMessage = "Mobile Number is required")]
+        [Display(Name = "Mobile Number")]
         public string MobileNo { get; set; }
+
+        [Required(ErrorMessage = "Expertise is required")]
+        [Display(Name = "Expertise")]
         public string Expertise { get; set; }
     
+        public virtual Area Area { get; set; }
         public virtual City City { get; set; }
         public virtual DirectoryCategory DirectoryCategory { get; set; }
         public virtual State State { get; set; }

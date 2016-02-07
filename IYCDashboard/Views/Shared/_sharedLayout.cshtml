@@ -48,40 +48,40 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            @Html.ActionLink("Dashboard", "Dashboard", "Home", new { htmlAttributes = new { @class = "fa fa-dashboard fa-fw nav_icon" } })
+                            @Html.ActionLink("Dashboard", "Dashboard", "Home")
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-laptop nav_icon"></i>Masters<span class="fa arrow"></span></a>
+                            <a href="#">Masters<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    @Html.ActionLink("Add / Edit Categories", "Index", "Categories")
+                                    @Html.ActionLink("Categories", "Index", "Categories")
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Add / Edit SubCategories", "Index", "SubCategories")
+                                    @Html.ActionLink("SubCategories", "Index", "SubCategories")
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Add / Edit States", "Index", "States")
+                                    @Html.ActionLink("States", "Index", "States")
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Add / Edit Cities", "Index", "Cities")
+                                    @Html.ActionLink("Cities", "Index", "Cities")
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Add / Edit Areas", "Index", "Areas")
+                                    @Html.ActionLink("Areas", "Index", "Areas")
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Add / Edit Directory Categories", "Index", "DirectoryCategories")
+                                    @Html.ActionLink("Directory Categories", "Index", "DirectoryCategories")
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-indent nav_icon"></i>Add / Edit Posts</a>
+                            <a href="#">Posts</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-envelope nav_icon"></i>Add / Edit Blood Requests</a>
+                            <a href="#">Blood Requests</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-envelope nav_icon"></i>Add / Edit Directories</a>
+                            @Html.ActionLink("Directories", "Index", "Directories")
                         </li>
                     </ul>
                 </div>

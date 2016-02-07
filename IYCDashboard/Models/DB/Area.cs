@@ -15,7 +15,13 @@ namespace IYCDashboard.Models.DB
 
     public partial class Area
     {
-        public long AreaId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Area()
+        {
+            this.Directories = new HashSet<Directory>();
+        }
+    
+       public long AreaId { get; set; }
 
         [Required(ErrorMessage = "Area Name is required")]
         [Display(Name = "Area")]
@@ -31,5 +37,7 @@ namespace IYCDashboard.Models.DB
     
         public virtual City City { get; set; }
         public virtual State State { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Directory> Directories { get; set; }
     }
 }

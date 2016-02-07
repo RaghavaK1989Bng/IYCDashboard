@@ -1,0 +1,90 @@
+﻿@model IYCDashboard.Models.DB.Directory
+
+@{
+    ViewBag.Title = "Directory Details";
+    Layout = "~/Views/Shared/_sharedLayout.cshtml";
+}
+
+<div>
+    <br />
+    <h4>Directory Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.Name, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.ServiceProvided, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceProvided)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.PinCode, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PinCode)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.MobileNo, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MobileNo)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Expertise, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Expertise)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Area.AreaName, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Area.AreaName)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.City.CityName, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.CityName)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.DirectoryCategory.CategoryName, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DirectoryCategory.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.State.StateName, new { @class = "col-sm-2 control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State.StateName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DirectoryEntryID }, new { @class = "btn btn-link" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-link" })
+</p>

@@ -12,17 +12,16 @@ namespace IYCDashboard.Models.DB
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
     public partial class City
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public City()
         {
             this.BloodRequests = new HashSet<BloodRequest>();
-            this.Directories = new HashSet<Directory>();
             this.Items = new HashSet<Item>();
             this.UserRegistrations = new HashSet<UserRegistration>();
             this.Areas = new HashSet<Area>();
+            this.Directories = new HashSet<Directory>();
         }
     
         public int CityID { get; set; }
@@ -34,17 +33,17 @@ namespace IYCDashboard.Models.DB
         [Required(ErrorMessage = "State Name is required")]
         [Display(Name = "State")]
         public int StateID { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BloodRequest> BloodRequests { get; set; }
         public virtual State State { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Directory> Directories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRegistration> UserRegistrations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Area> Areas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Directory> Directories { get; set; }
     }
 }

@@ -64,7 +64,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="ServiceProvided" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="StateID" Type="int" Nullable="false" />
           <Property Name="CityID" Type="int" Nullable="false" />
-          <Property Name="AreaLocated" Type="varchar" MaxLength="100" />
+          <Property Name="AreaLocated" Type="bigint" Nullable="false" />
           <Property Name="PinCode" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="MobileNo" Type="varchar" MaxLength="15" />
           <Property Name="Expertise" Type="varchar" MaxLength="250" Nullable="false" />
@@ -97,7 +97,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="SubCategoryID" Type="int" Nullable="false" />
           <Property Name="PublishedDate" Type="datetime" Nullable="false" />
           <Property Name="HeadLine" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="ShortDescription" Type="varchar" MaxLength="250" />
+          <Property Name="ShortDescription" Type="varchar(max)" />
           <Property Name="Location" Type="varchar" MaxLength="50" />
           <Property Name="EventStartDateTime" Type="datetime" />
           <Property Name="EventEndDateTime" Type="datetime" />
@@ -134,6 +134,14 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="UserDevices">
+          <Key>
+            <PropertyRef Name="UserDeviceID" />
+          </Key>
+          <Property Name="UserDeviceID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="DeviceID" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserFaviourateBloodRequests">
           <Key>
             <PropertyRef Name="UserBloodRequestFaviourateID" />
@@ -168,7 +176,6 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="ProfilePicture" Type="varbinary(max)" />
           <Property Name="EmailID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="MobileNo" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="DeviceID" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="CityID" Type="int" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="50" />
@@ -218,6 +225,18 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
             </Principal>
             <Dependent Role="Cities">
               <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Directory_Areas">
+          <End Role="Areas" Type="Self.Areas" Multiplicity="1" />
+          <End Role="Directory" Type="Self.Directory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Areas">
+              <PropertyRef Name="AreaId" />
+            </Principal>
+            <Dependent Role="Directory">
+              <PropertyRef Name="AreaLocated" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -341,6 +360,18 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserDevices_UserRegistration">
+          <End Role="UserRegistration" Type="Self.UserRegistration" Multiplicity="1" />
+          <End Role="UserDevices" Type="Self.UserDevices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRegistration">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserDevices">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserFaviourateItems_Items">
           <End Role="Items" Type="Self.Items" Multiplicity="1" />
           <End Role="UserFaviourateItems" Type="Self.UserFaviourateItems" Multiplicity="*" />
@@ -425,6 +456,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategories" EntityType="Self.SubCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDevices" EntityType="Self.UserDevices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFaviourateBloodRequests" EntityType="Self.UserFaviourateBloodRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFaviourateItems" EntityType="Self.UserFaviourateItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
@@ -450,6 +482,10 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <AssociationSet Name="FK_Cities_States" Association="Self.FK_Cities_States">
             <End Role="States" EntitySet="States" />
             <End Role="Cities" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Directory_Areas" Association="Self.FK_Directory_Areas">
+            <End Role="Areas" EntitySet="Areas" />
+            <End Role="Directory" EntitySet="Directory" />
           </AssociationSet>
           <AssociationSet Name="FK_Directory_Cities" Association="Self.FK_Directory_Cities">
             <End Role="Cities" EntitySet="Cities" />
@@ -490,6 +526,10 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <AssociationSet Name="FK_UserBloodGroupFaviourates_UserRegistration" Association="Self.FK_UserBloodGroupFaviourates_UserRegistration">
             <End Role="UserRegistration" EntitySet="UserRegistration" />
             <End Role="UserFaviourateBloodRequests" EntitySet="UserFaviourateBloodRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDevices_UserRegistration" Association="Self.FK_UserDevices_UserRegistration">
+            <End Role="UserRegistration" EntitySet="UserRegistration" />
+            <End Role="UserDevices" EntitySet="UserDevices" />
           </AssociationSet>
           <AssociationSet Name="FK_UserFaviourateItems_Items" Association="Self.FK_UserFaviourateItems_Items">
             <End Role="Items" EntitySet="Items" />
@@ -556,28 +596,10 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="StateID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BloodRequests" Relationship="Self.FK_BloodRequests_Cities" FromRole="Cities" ToRole="BloodRequests" />
           <NavigationProperty Name="State" Relationship="Self.FK_Cities_States" FromRole="Cities" ToRole="States" />
-          <NavigationProperty Name="Directories" Relationship="Self.FK_Directory_Cities" FromRole="Cities" ToRole="Directory" />
           <NavigationProperty Name="Items" Relationship="Self.FK_Items_Cities" FromRole="Cities" ToRole="Items" />
           <NavigationProperty Name="UserRegistrations" Relationship="Self.FK_UserRegistration_Cities" FromRole="Cities" ToRole="UserRegistration" />
           <NavigationProperty Name="Areas" Relationship="IYCModel.FK_Areas_Cities" FromRole="City" ToRole="Area" />
-        </EntityType>
-        <EntityType Name="Directory">
-          <Key>
-            <PropertyRef Name="DirectoryEntryID" />
-          </Key>
-          <Property Name="DirectoryEntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DirectoryCategoryID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ServiceProvided" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="StateID" Type="Int32" Nullable="false" />
-          <Property Name="CityID" Type="Int32" Nullable="false" />
-          <Property Name="AreaLocated" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PinCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="Expertise" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="City" Relationship="Self.FK_Directory_Cities" FromRole="Directory" ToRole="Cities" />
-          <NavigationProperty Name="DirectoryCategory" Relationship="Self.FK_Directory_DirectoryCategories" FromRole="Directory" ToRole="DirectoryCategories" />
-          <NavigationProperty Name="State" Relationship="Self.FK_Directory_States" FromRole="Directory" ToRole="States" />
+          <NavigationProperty Name="Directories" Relationship="IYCModel.FK_Directory_Cities" FromRole="City" ToRole="Directory" />
         </EntityType>
         <EntityType Name="DirectoryCategory">
           <Key>
@@ -585,7 +607,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           </Key>
           <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Directories" Relationship="Self.FK_Directory_DirectoryCategories" FromRole="DirectoryCategories" ToRole="Directory" />
+          <NavigationProperty Name="Directories" Relationship="IYCModel.FK_Directory_DirectoryCategories" FromRole="DirectoryCategory" ToRole="Directory" />
         </EntityType>
         <EntityType Name="ItemPicture">
           <Key>
@@ -609,7 +631,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
           <Property Name="PublishedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="HeadLine" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ShortDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EventStartDateTime" Type="DateTime" Precision="3" />
           <Property Name="EventEndDateTime" Type="DateTime" Precision="3" />
@@ -633,8 +655,8 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cities" Relationship="Self.FK_Cities_States" FromRole="States" ToRole="Cities" />
-          <NavigationProperty Name="Directories" Relationship="Self.FK_Directory_States" FromRole="States" ToRole="Directory" />
           <NavigationProperty Name="Areas" Relationship="IYCModel.FK_Areas_States" FromRole="State" ToRole="Area" />
+          <NavigationProperty Name="Directories" Relationship="IYCModel.FK_Directory_States" FromRole="State" ToRole="Directory" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -698,7 +720,6 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="EmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DeviceID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CityID" Type="Int32" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="City" Relationship="Self.FK_UserRegistration_Cities" FromRole="UserRegistration" ToRole="Cities" />
@@ -706,6 +727,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <NavigationProperty Name="UserFaviourateItems" Relationship="Self.FK_UserFaviourateItems_UserRegistration" FromRole="UserRegistration" ToRole="UserFaviourateItems" />
           <NavigationProperty Name="UserPreferences" Relationship="Self.FK_UserPreferences_UserRegistration" FromRole="UserRegistration" ToRole="UserPreferences" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserDevices" Relationship="IYCModel.FK_UserDevices_UserRegistration" FromRole="UserRegistration" ToRole="UserDevice" />
         </EntityType>
         <EntityType Name="AdminLogin">
           <Key>
@@ -787,18 +809,6 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Directory_Cities">
-          <End Role="Cities" Type="Self.City" Multiplicity="1" />
-          <End Role="Directory" Type="Self.Directory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cities">
-              <PropertyRef Name="CityID" />
-            </Principal>
-            <Dependent Role="Directory">
-              <PropertyRef Name="CityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Items_Cities">
           <End Role="Cities" Type="Self.City" Multiplicity="1" />
           <End Role="Items" Type="Self.Item" Multiplicity="*" />
@@ -820,30 +830,6 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
             </Principal>
             <Dependent Role="UserRegistration">
               <PropertyRef Name="CityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Directory_DirectoryCategories">
-          <End Role="DirectoryCategories" Type="Self.DirectoryCategory" Multiplicity="1" />
-          <End Role="Directory" Type="Self.Directory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DirectoryCategories">
-              <PropertyRef Name="CategoryID" />
-            </Principal>
-            <Dependent Role="Directory">
-              <PropertyRef Name="DirectoryCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Directory_States">
-          <End Role="States" Type="Self.State" Multiplicity="1" />
-          <End Role="Directory" Type="Self.Directory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="States">
-              <PropertyRef Name="StateID" />
-            </Principal>
-            <Dependent Role="Directory">
-              <PropertyRef Name="StateID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -935,7 +921,6 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <EntitySet Name="BloodRequests" EntityType="Self.BloodRequest" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Cities" EntityType="Self.City" />
-          <EntitySet Name="Directories" EntityType="Self.Directory" />
           <EntitySet Name="DirectoryCategories" EntityType="Self.DirectoryCategory" />
           <EntitySet Name="ItemPictures" EntityType="Self.ItemPicture" />
           <EntitySet Name="Items" EntityType="Self.Item" />
@@ -971,10 +956,6 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
             <End Role="States" EntitySet="States" />
             <End Role="Cities" EntitySet="Cities" />
           </AssociationSet>
-          <AssociationSet Name="FK_Directory_Cities" Association="Self.FK_Directory_Cities">
-            <End Role="Cities" EntitySet="Cities" />
-            <End Role="Directory" EntitySet="Directories" />
-          </AssociationSet>
           <AssociationSet Name="FK_Items_Cities" Association="Self.FK_Items_Cities">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="Items" EntitySet="Items" />
@@ -982,14 +963,6 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <AssociationSet Name="FK_UserRegistration_Cities" Association="Self.FK_UserRegistration_Cities">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="UserRegistration" EntitySet="UserRegistrations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Directory_DirectoryCategories" Association="Self.FK_Directory_DirectoryCategories">
-            <End Role="DirectoryCategories" EntitySet="DirectoryCategories" />
-            <End Role="Directory" EntitySet="Directories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Directory_States" Association="Self.FK_Directory_States">
-            <End Role="States" EntitySet="States" />
-            <End Role="Directory" EntitySet="Directories" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemPictures_Items" Association="Self.FK_ItemPictures_Items">
             <End Role="Items" EntitySet="Items" />
@@ -1028,6 +1001,28 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
             <End Role="State" EntitySet="States" />
             <End Role="Area" EntitySet="Areas" />
           </AssociationSet>
+          <EntitySet Name="UserDevices" EntityType="IYCModel.UserDevice" />
+          <AssociationSet Name="FK_UserDevices_UserRegistration" Association="IYCModel.FK_UserDevices_UserRegistration">
+            <End Role="UserRegistration" EntitySet="UserRegistrations" />
+            <End Role="UserDevice" EntitySet="UserDevices" />
+          </AssociationSet>
+          <EntitySet Name="Directories" EntityType="IYCModel.Directory" />
+          <AssociationSet Name="FK_Directory_Areas" Association="IYCModel.FK_Directory_Areas">
+            <End Role="Area" EntitySet="Areas" />
+            <End Role="Directory" EntitySet="Directories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Directory_Cities" Association="IYCModel.FK_Directory_Cities">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Directory" EntitySet="Directories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Directory_DirectoryCategories" Association="IYCModel.FK_Directory_DirectoryCategories">
+            <End Role="DirectoryCategory" EntitySet="DirectoryCategories" />
+            <End Role="Directory" EntitySet="Directories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Directory_States" Association="IYCModel.FK_Directory_States">
+            <End Role="State" EntitySet="States" />
+            <End Role="Directory" EntitySet="Directories" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Area">
           <Key>
@@ -1039,6 +1034,7 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
           <Property Name="CityId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="City" Relationship="IYCModel.FK_Areas_Cities" FromRole="Area" ToRole="City" />
           <NavigationProperty Name="State" Relationship="IYCModel.FK_Areas_States" FromRole="Area" ToRole="State" />
+          <NavigationProperty Name="Directories" Relationship="IYCModel.FK_Directory_Areas" FromRole="Area" ToRole="Directory" />
         </EntityType>
         <Association Name="FK_Areas_Cities">
           <End Type="IYCModel.City" Role="City" Multiplicity="1" />
@@ -1061,6 +1057,94 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
             </Principal>
             <Dependent Role="Area">
               <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserDevice">
+          <Key>
+            <PropertyRef Name="UserDeviceID" />
+          </Key>
+          <Property Name="UserDeviceID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="DeviceID" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserRegistration" Relationship="IYCModel.FK_UserDevices_UserRegistration" FromRole="UserDevice" ToRole="UserRegistration" />
+        </EntityType>
+        <Association Name="FK_UserDevices_UserRegistration">
+          <End Type="IYCModel.UserRegistration" Role="UserRegistration" Multiplicity="1" />
+          <End Type="IYCModel.UserDevice" Role="UserDevice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRegistration">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserDevice">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Directory">
+          <Key>
+            <PropertyRef Name="DirectoryEntryID" />
+          </Key>
+          <Property Name="DirectoryEntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DirectoryCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceProvided" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="AreaLocated" Type="Int64" Nullable="false" />
+          <Property Name="PinCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Expertise" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Area" Relationship="IYCModel.FK_Directory_Areas" FromRole="Directory" ToRole="Area" />
+          <NavigationProperty Name="City" Relationship="IYCModel.FK_Directory_Cities" FromRole="Directory" ToRole="City" />
+          <NavigationProperty Name="DirectoryCategory" Relationship="IYCModel.FK_Directory_DirectoryCategories" FromRole="Directory" ToRole="DirectoryCategory" />
+          <NavigationProperty Name="State" Relationship="IYCModel.FK_Directory_States" FromRole="Directory" ToRole="State" />
+        </EntityType>
+        <Association Name="FK_Directory_Areas">
+          <End Type="IYCModel.Area" Role="Area" Multiplicity="1" />
+          <End Type="IYCModel.Directory" Role="Directory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="AreaId" />
+            </Principal>
+            <Dependent Role="Directory">
+              <PropertyRef Name="AreaLocated" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Directory_Cities">
+          <End Type="IYCModel.City" Role="City" Multiplicity="1" />
+          <End Type="IYCModel.Directory" Role="Directory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="Directory">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Directory_DirectoryCategories">
+          <End Type="IYCModel.DirectoryCategory" Role="DirectoryCategory" Multiplicity="1" />
+          <End Type="IYCModel.Directory" Role="Directory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DirectoryCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Directory">
+              <PropertyRef Name="DirectoryCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Directory_States">
+          <End Type="IYCModel.State" Role="State" Multiplicity="1" />
+          <End Type="IYCModel.Directory" Role="Directory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="Directory">
+              <PropertyRef Name="StateID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1100,22 +1184,6 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
                 <ScalarProperty Name="CityName" ColumnName="CityName" />
                 <ScalarProperty Name="StateID" ColumnName="StateID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Directories">
-            <EntityTypeMapping TypeName="IYCModel.Directory">
-              <MappingFragment StoreEntitySet="Directory">
-                <ScalarProperty Name="DirectoryEntryID" ColumnName="DirectoryEntryID" />
-                <ScalarProperty Name="DirectoryCategoryID" ColumnName="DirectoryCategoryID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ServiceProvided" ColumnName="ServiceProvided" />
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="AreaLocated" ColumnName="AreaLocated" />
-                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="Expertise" ColumnName="Expertise" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1227,7 +1295,6 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
                 <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
                 <ScalarProperty Name="EmailID" ColumnName="EmailID" />
                 <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
               </MappingFragment>
@@ -1248,6 +1315,31 @@ warning 6002: The table/view 'iycnew.dbo.AdminLogin' does not have a primary key
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
                 <ScalarProperty Name="AreaName" ColumnName="AreaName" />
                 <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDevices">
+            <EntityTypeMapping TypeName="IYCModel.UserDevice">
+              <MappingFragment StoreEntitySet="UserDevices">
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserDeviceID" ColumnName="UserDeviceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Directories">
+            <EntityTypeMapping TypeName="IYCModel.Directory">
+              <MappingFragment StoreEntitySet="Directory">
+                <ScalarProperty Name="Expertise" ColumnName="Expertise" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="AreaLocated" ColumnName="AreaLocated" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="ServiceProvided" ColumnName="ServiceProvided" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DirectoryCategoryID" ColumnName="DirectoryCategoryID" />
+                <ScalarProperty Name="DirectoryEntryID" ColumnName="DirectoryEntryID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

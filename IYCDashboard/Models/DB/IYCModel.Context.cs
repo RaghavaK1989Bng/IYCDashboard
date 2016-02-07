@@ -28,7 +28,6 @@ namespace IYCDashboard.Models.DB
         public virtual DbSet<BloodRequest> BloodRequests { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<City> Cities { get; set; }
-        public virtual DbSet<Directory> Directories { get; set; }
         public virtual DbSet<DirectoryCategory> DirectoryCategories { get; set; }
         public virtual DbSet<ItemPicture> ItemPictures { get; set; }
         public virtual DbSet<Item> Items { get; set; }
@@ -41,5 +40,7 @@ namespace IYCDashboard.Models.DB
         public virtual DbSet<UserRegistration> UserRegistrations { get; set; }
         public virtual DbSet<AdminLogin> AdminLogins { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
+        public virtual DbSet<UserDevice> UserDevices { get; set; }
+        public virtual DbSet<Directory> Directories { get; set; }
     }
 }

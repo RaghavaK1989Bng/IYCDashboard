@@ -12,15 +12,14 @@ namespace IYCDashboard.Models.DB
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
     public partial class State
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public State()
         {
             this.Cities = new HashSet<City>();
-            this.Directories = new HashSet<Directory>();
             this.Areas = new HashSet<Area>();
+            this.Directories = new HashSet<Directory>();
         }
     
         public int StateID { get; set; }
@@ -28,12 +27,12 @@ namespace IYCDashboard.Models.DB
         [Required(ErrorMessage = "State Name is required")]
         [Display(Name = "State")]
         public string StateName { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<City> Cities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Directory> Directories { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Area> Areas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Directory> Directories { get; set; }
     }
 }

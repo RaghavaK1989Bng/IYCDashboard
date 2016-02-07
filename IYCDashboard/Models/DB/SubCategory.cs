@@ -12,7 +12,6 @@ namespace IYCDashboard.Models.DB
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
     public partial class SubCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -31,7 +30,7 @@ namespace IYCDashboard.Models.DB
         [Required(ErrorMessage = "SubCategory Name is required")]
         [Display(Name = "SubCategory Name")]
         public string SubCategoryName { get; set; }
-    
+
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Items { get; set; }
